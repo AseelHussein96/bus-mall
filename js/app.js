@@ -22,6 +22,9 @@ const products = [
     'water-can',
     'wine-glass',
 ];
+const main=document.getElementById('main');
+let button = document.getElementById('button');
+let List = document.getElementById('ul');
 const busMarket = document.getElementById('busMarket');
 const leftImage = document.getElementById('leftImage');
 const CenterImage = document.getElementById('CenterImage');
@@ -92,32 +95,50 @@ function click(event) {
                 market.all[i].votes++;
                 market.all[i].views++;
                 console.table(market.all[i])
+                render();
+
 
 
             }
 
         }
-        render();
+        
     }
 
     if (maxTrials === 0) {
         busMarket.removeEventListener('click', click);
-        createChart();
+       
+        button.classList.add('bt');
+        button.textContent='view result';
+        main.appendChild(button);
+        busMarket.addEventListener('click', click);
+        
 
     }
+    createChart();
+    localStorage.setItem(JSON.stringify(market.all));
 }
-let button = document.getElementById('button');
+
 busMarket.addEventListener('click', click);
+market.list=[];
+// function List() {
+//     for (let j = 0; j < market.all.length; j++) {
+//         let li = document.createElement('li');
+//         li.innerText = 'This product  ' + market.all[j].product + ' has ' + market.all[j].votes + ' votes and ' + market.all[j].views + ' views .';
+//         List.appendChild(li);
+//         console.log(market.all[j].votes, market.all[j].views);
+//     }
+// }
+// function clickButton(){
+//     button.innerHTML = 'View result';
+//     let main = document.getElementsByTagName('button')[0];
+//     main.appendChild(button);
+//     button.addEventListener ('click', function() {
+//       List();
+  
+//     });
+//   }
 
-function clickButton() {
-    let List = document.getElementById('ul');
-    for (let j = 0; j < market.all.length; j++) {
-        let li = document.createElement('li');
-        li.innerText = 'This product  ' + market.all[j].product + ' has ' + market.all[j].votes + ' votes and ' + market.all[j].views + ' views .';
-        List.appendChild(li);
-        console.log(market.all[j].votes, market.all[j].views);
-    }
-}
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -176,4 +197,10 @@ function createChart() {
     let chart = new Chart(context, chartObject);
 
 }
+
+// if(localStorage.totalProductShowns){
+//     Votes = JSON.parse(localStorage.getItem('totalProductVotes'));
+//     views = JSON.parse(localStorage.getItem('totalProductShowns'));
+//   }
 render();
+randomNumber();
